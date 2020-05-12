@@ -1,0 +1,35 @@
+{
+  "name": "p6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist package-lock.json node_modules",
+    "start": "npx parcel ./src/index.html -d .dist --port 8080",
+    "build": "parcel build ./src/index.html --public-url /SSI/ -d build",
+    "deploy": "npx gh-pages -d build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkuroi/SSI.git"
+  },
+  "author": "Diego Vázquez Campos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dkuroi/SSI.git/issues"
+  },
+  "homepage": "https://github.com/dkuroi/SSI.git#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.7.6",
+    "cssnano": "^4.1.10",
+    "gh-pages": "^2.2.0",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-bundle-visualiser": "^1.2.0",
+    "postcss-clean": "^1.1.0",
+    "postcss-font-magician": "^2.3.1",
+    "postcss-mixins": "^6.2.3",
+    "postcss-nesting": "^7.0.1"
+  },
+  "dependencies": {}
+}
