@@ -112,6 +112,5 @@ function createEvent(obj, tag) {
     $(`#encrypt`).click(() => {
         if($('#algoritmo option:selected').text() == tag) 
             new obj($('#formato option:selected').val(), $("#plaintext").val(), $("#cipherkey").val());
-    });
-    
+    });    
 }

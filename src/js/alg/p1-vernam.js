@@ -35,14 +35,6 @@ export default class p1 { // vernam
        }); 
     }
 
-    decrypt() {
-
-    }
-
-    binarize() {
-
-    }
-
     generate_key() {
 
     }
