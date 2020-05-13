@@ -1,87 +1,98 @@
 import { ints, hexs, bins, str } from './utils/transforms';
 
-import p1 from './alg/p1-vernam';
-import p2 from './alg/p2-vigenere';
-import p3 from './alg/p3-rc4';
-import p4 from './alg/p4-a5-1';
-import p5 from './alg/p5-gen-e0';
-import p6 from './alg/p6-multi-snow3g-y-aes';
-import p7 from './alg/p7-rijndael';
-import p8 from './alg/p8-cbc';
-import p9 from './alg/p9-diffle-hellman';
+import p1  from './alg/p1-vernam';
+import p2  from './alg/p2-vigenere';
+import p3  from './alg/p3-rc4';
+import p4  from './alg/p4-a5-1';
+import p5  from './alg/p5-gen-e0';
+import p6  from './alg/p6-multi-snow3g-y-aes';
+import p7  from './alg/p7-rijndael';
+import p8  from './alg/p8-cbc';
+import p9  from './alg/p9-diffle-hellman';
 import p10 from './alg/p10-fiat-shamir';
 import p11 from './alg/p11-rsa';
 import p12 from './alg/p12-gamal-eliptico';
 
-disable(1,1,1,1);
+disable(1,1,1,1,1,1);
 var objs = [ 0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12 ]
 
+// selectores
 
-$('#algoritmo').children().map(it => createEvent(objs[it],  $('#algoritmo').children()[it].innerHTML));
 
+// listeners
+$('#algoritmo').children().map(it => createEncrypt(objs[it],  $('#algoritmo').children()[it].innerHTML));
+$('#algoritmo').children().map(it => createDecrypt(objs[it],  $('#algoritmo').children()[it].innerHTML));
+
+if ($('#ej1').is(':checked')) {
+    $('#ej2').attr('disabled','disabled');
+} else {
+}
+
+// inicialización
 $('#algoritmo').change(() => {
-    switch($('#algoritmo option:selected').text()) {
-        case "P1  - Vernam": 
-            active(1,1,1,1);
-            disable(0,0,1,0);     
+    switch($('#algoritmo option:selected').val()) {
+        case "1": 
+            active(1,1,1,1,1,1);
+            disable(0,0,1,0,0,0);  
+
+            $('#ejemplos').change(() => {
+                if($('#algoritmo option:selected').val() == "1") {
+                    if($('#ej1').is(':checked')) {
+                        $(`#plaintext`).html("SOL");
+                        $(`#cipherkey`).html(str.fromBins(["00111100", "00011000", "01110011"]).join(''));
+                    } 
+                    if($('#ej2').is(':checked')) {
+                        $(`#plaintext`).html("[t");
+                        $(`#cipherkey`).html(str.fromBins(["00001111", "00100001"]).join(''));
+                    }     
+                }
+            }); 
+
+            ; break;
             
-            $(`#cipherkey`).html(str.fromBins(["00111100", "00011000", "01110011"]).join(''));  
-            ; break;
-            
-        case "P2  - Vigenere": 
-            active(1,1,1,1);
-            disable(0,0,1,0);
-            
+        case "2": 
+            active(1,1,1,1,1,1);
+            disable(0,0,0,0,0,0);  
+            $('#ej2').attr('disabled','disabled');
+
+            $('#ejemplos').change(() => {
+                if($('#algoritmo option:selected').val() == "2") {
+                    if($('#ej1').is(':checked')) {
+                        $(`#plaintext`).html("ESTE MENSAJE SE AUTODESTRUIRA");
+                        $(`#cipherkey`).html("MISION");
+                    } 
+                }
+            }); 
             ; break;
 
-        case "P3  - RC4": 
-            active(1,1,1,1);
-            disable(0,0,1,0);
+        case "3": 
             ; break;
 
-        case "P4  - A5-1":
-            active(1,1,1,1);
-            disable(0,0,1,0); 
+        case "4":
             ; break;
 
-        case "P5  - Generador E0 de Bluetooth":
-            active(1,1,1,1);
-            disable(0,0,1,0); 
+        case "5":
             ; break;
 
-        case "P6  - Multiplicación Snow3G y AES":
-            active(1,1,1,1);
-            disable(0,0,1,0); 
+        case "6":
             ; break;
 
-        case "P7  - Rijndael":
-            active(1,1,1,1);
-            disable(0,0,1,0); 
+        case "7":
             ; break;
 
-        case "P8  - CBC":
-            active(1,1,1,1);
-            disable(0,0,1,0); 
+        case "8":
             ; break;
 
-        case "P9  - Diffle-Hellman":
-            active(1,1,1,1);
-            disable(0,0,1,0);
+        case "9":
             ; break;
 
-        case "P10 - Fiat-Shamir":
-            active(1,1,1,1);
-            disable(0,0,1,0);
+        case "10":
             ; break;
 
-        case "P11 - RSA":
-            active(1,1,1,1);
-            disable(0,0,1,0);
+        case "11":
             ; break;
 
-        case "P12 - Gamal Elíptico":
-            active(1,1,1,1);
-            disable(0,0,1,0);
+        case "12":
             ; break;
 
         default:
@@ -93,24 +104,44 @@ $('#algoritmo').change(() => {
     }
 });
 
-function disable(formato, plaintext, key, btn) {
+function disable(formato, plaintext, key, enc, des, ej) {
     if(formato)   $('#formato').attr('disabled','disabled');
     if(plaintext) $('#plaintext').attr('disabled','disabled');
     if(key)       $('#cipherkey').attr('disabled','disabled');
-    if(btn)       $('#encrypt').attr('disabled','disabled');
+    if(enc)       $('#encrypt').attr('disabled','disabled');
+    if(des)       $('#decrypt').attr('disabled','disabled');
+    if(ej)        $('.form-check-input').attr('disabled','disabled');
 }
 
 
-function active(formato, plaintext, key, btn) {
+function active(formato, plaintext, key, enc, des, ej) {
     if(formato)   $('#formato').removeAttr('disabled');
     if(plaintext) $('#plaintext').removeAttr('disabled');
     if(key)       $('#cipherkey').removeAttr('disabled');
-    if(btn)       $('#encrypt').removeAttr('disabled');
+    if(enc)       $('#encrypt').removeAttr('disabled');
+    if(des)       $('#decrypt').removeAttr('disabled');
+    if(ej)        $('.form-check-input').removeAttr('disabled');
 }
 
-function createEvent(obj, tag) {
+function createEncrypt(obj, tag) {
     $(`#encrypt`).click(() => {
-        if($('#algoritmo option:selected').text() == tag) 
-            new obj($('#formato option:selected').val(), $("#plaintext").val(), $("#cipherkey").val());
+        if($('#algoritmo option:selected').text() == tag) {
+            console.clear();
+            let tmp = new obj($('#formato option:selected').val(), $("#plaintext").val(), $("#cipherkey").val());
+            tmp.res = tmp.encrypt();
+            tmp.render();
+
+
+        }
+    });    
+}
+
+function createDecrypt(obj, tag) {
+    $(`#decrypt`).click(() => {
+        if($('#algoritmo option:selected').text() == tag) {
+            let tmp = new obj($('#formato option:selected').val(), $("#plaintext").val(), $("#cipherkey").val());
+            tmp.res = tmp.decrypt();
+            tmp.render();
+        }
     });    
 }
