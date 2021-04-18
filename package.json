@@ -30,6 +30,5 @@
     "postcss-font-magician": "^2.3.1",
     "postcss-mixins": "^6.2.3",
     "postcss-nesting": "^7.0.1"
-  },
-  "dependencies": {}
+  }
 }

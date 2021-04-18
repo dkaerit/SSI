@@ -34,6 +34,7 @@ $('#algoritmo').change(() => {
         case "1": 
             active(1,1,1,1,1,1);
             disable(0,0,1,0,0,0);  
+            $("#formato").val('srt');
 
             $('#ejemplos').change(() => {
                 if($('#algoritmo option:selected').val() == "1") {
@@ -53,6 +54,7 @@ $('#algoritmo').change(() => {
         case "2": 
             active(1,1,1,1,1,1);
             disable(0,0,0,0,0,0);  
+            $("#formato").val('srt');
             $('#ej2').attr('disabled','disabled');
 
             $('#ejemplos').change(() => {
@@ -81,6 +83,44 @@ $('#algoritmo').change(() => {
             ; break;
 
         case "8":
+            active(1,1,1,1,1,1);
+            disable(1,0,0,0,0,0); 
+            $("#formato").val('hex');
+
+            $('#ejemplos').change(() => {
+                if($('#algoritmo option:selected').val() == "8") {
+                    if($('#ej1').is(':checked')) {
+                        disable(0,0,1,0,0,0); 
+                        $(`#plaintext`).html(([
+                            "00", "11", "22", "33", "44", "55", "66", "77", 
+                            "88", "99", "AA", "BB", "CC", "DD", "EE", "FF", 
+                            "00", "00", "00", "00", "00", "00", "00", "00", 
+                            "00", "00", "00", "00", "00", "00", "00", "00"
+                        ]).join(', '));
+                        $(`#cipherkey`).html(([
+                            "00","01","02","03","04","05","06","07",
+                            "08","09","0A","0B","0C","0D","0E","0F"
+                        ]).join(', '));
+                    } 
+                    if($('#ej2').is(':checked')) {
+                        disable(0,0,1,0,0,0); 
+                        $(`#plaintext`).html(([
+                            "00", "11", "22", "33", "44", "55", "66", "77", 
+                            "88", "99", "AA", "BB", "CC", "DD", "EE", "FF", 
+                            "00", "00", "00", "00", "00", "00", "00", "00", 
+                            "00", "00", "00", "00", "00", "00", "00"
+                        ]).join(', '));
+                        $(`#cipherkey`).html(([
+                            "00","01","02","03","04","05","06","07",
+                            "08","09","0A","0B","0C","0D","0E","0F"
+                        ]).join(', '));
+                    }
+                    if($('#manual').is(':checked')) {
+                        active(0,0,1,0,0,0); 
+                    }
+                }
+            }); 
+
             ; break;
 
         case "9":
@@ -130,8 +170,6 @@ function createEncrypt(obj, tag) {
             let tmp = new obj($('#formato option:selected').val(), $("#plaintext").val(), $("#cipherkey").val());
             tmp.res = tmp.encrypt();
             tmp.render();
-
-
         }
     });    
 }
