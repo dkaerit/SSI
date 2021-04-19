@@ -32,7 +32,7 @@ var hexs = {
                 if(arr_int.toString(16).length < 2) return Number(`0x0${arr_int.toString(16)}`);
                 else                                return Number(`0x${arr_int.toString(16)}`);
             } else {
-                console.log("entró aquí",arr_int,mode,`${arr_int.toString(16)}`);
+                //console.log("entró aquí",arr_int,mode,`${arr_int.toString(16)}`);
                 if(arr_int.toString(16).length < 2) return (`0${arr_int.toString(16)}`);
                 else                                return (`${arr_int.toString(16)}`);
             }
