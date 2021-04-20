@@ -12,9 +12,11 @@ import p9  from './alg/p9-diffle-hellman';
 import p10 from './alg/p10-fiat-shamir';
 import p11 from './alg/p11-rsa';
 import p12 from './alg/p12-gamal-eliptico';
+import p13 from './alg/p13-chacha20';
+import p14 from './alg/p14-gen-ca-gps';
 
 disable(1,1,1,1,1,1);
-var objs = [ 0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12 ]
+var objs = [ 0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14 ]
 
 // selectores
 
