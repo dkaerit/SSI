@@ -8,12 +8,26 @@ Array.prototype.swap = function(a, b){
 
 export default class p8 {
     constructor(format, plaintext, key) { // str,str,str
-        this.iv = prompt("Introduce el IV", "00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00");
-        
-        this.key = ints.fromHexs(key.split(','));                       // preparar la clave - HEXS
-        this.iv  = ints.fromHexs(this.iv.split(','));                    // preparar IV - HEXS
-        this.bloques = this.separarEnBloques(plaintext); // array de bloques(arrays) - HEXS
-        this.bf = [].concat.apply([], this.bloques);     // bloques concatenados en uno - HEXS
+        // array de bloques(arrays) - HEXS
+        if(format == "srt") {
+            this.iv = prompt("Introduce el IV", "AAAAAAAAAAAAAAAA");
+            this.intsMsg = ints.fromString(plaintext);
+            this.key     = ints.fromString(key);               
+            this.iv      = ints.fromString(this.iv);   
+        }
+        if(format == "hex") {
+            this.iv = prompt("Introduce el IV", "00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00");
+            this.intsMsg = ints.fromHexs(plaintext.split(','));
+            this.key     = ints.fromHexs(key.split(','));               
+            this.iv      = ints.fromHexs(this.iv.split(','));           
+        }
+        if(format == "bin") {
+            this.iv = prompt("Introduce el IV", "000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,000000,");
+            this.intsMsg = ints.fromBins(plaintext.split(','));
+            this.key     = ints.fromBins(key.split(','));               
+            this.iv      = ints.fromBins(this.iv.split(','));
+        }
+        this.bloques = this.separarEnBloques(plaintext); 
         
         // mostrar los valores iniciales
         console.log("Clave", this.key);
@@ -54,6 +68,19 @@ export default class p8 {
         return [].concat.apply([], cifrados);
     }
 
+    separarEnBloques(plaintext) { // separar en bloques de 16 bytes
+        var tmp = [];
+        var result = [];
+        this.intsMsg.map((byte,i) => { // se mapea la cadena completa
+            tmp.push(byte); // recarco array temporal de 16 de longitud
+            if(i%16 == 15 || (i+1) == this.intsMsg.length) { // al llegar a mod16 o al final inserto eslabón 
+                result.push(tmp);
+                tmp = [];
+            }
+        });
+        return result;
+    }
+
     decrypt() {
         const aes = new Aes();
         var key = this.key;
@@ -67,22 +94,8 @@ export default class p8 {
         return [].concat.apply([], descifrados);;
     }
 
-    separarEnBloques(plaintext) { // separar en bloques de 16 bytes
-        var txt = ints.fromHexs(plaintext.split(', '));
-        var tmp = [];
-        var result = [];
-        txt.map((byte,i) => { // se mapea la cadena completa
-            tmp.push(byte); // recarco array temporal de 16 de longitud
-            if(i%16 == 15 || (i+1) == txt.length) { // al llegar a mod16 o al final inserto eslabón 
-                result.push(tmp);
-                tmp = [];
-            }
-        });
-        return result;
-    }
-
     cypherStealing(nivel,prevc) {
-        console.log(hexs.fromInts(this.bloques[nivel]),hexs.fromInts(prevc))
+        //console.log(hexs.fromInts(this.bloques[nivel]),hexs.fromInts(prevc))
         
         var bytesMinor = this.bloques[nivel].length; // byte del bloque pequeño
         var bytesMayor = prevc.length;               // bytes del cifrado anterior

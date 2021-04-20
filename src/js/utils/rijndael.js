@@ -3,17 +3,10 @@ import { ByteMultiplier } from './byte-multipliers.js';
 export const Aes = function () {
   /***********************************************************************************/
   // Constantes
-  // Multiplicador de bytes
-  this.byteMultiplier = new ByteMultiplier(0x1b);
-
-  // Número de columnas
-  this.Nb = 4;
-
-  // Número de rondas
-  this.numOfRounds = 10;
-
-  // Estado (intermedio)
-  this.state = [];
+  this.byteMultiplier = new ByteMultiplier(0x1b); // Multiplicador de bytes
+  this.Nb = 4; // Número de columnas
+  this.numOfRounds = 10; // Número de rondas
+  this.state = []; // Estado (intermedio)
 
   // Caja S
   this.Sbox = [
@@ -212,11 +205,8 @@ export const Aes = function () {
    * @param {number[]} clearText 
    */
   this.cipher = function (Flatkey, clearText) {
-    // Pasamos la entrada a matriz y luego obtenemos la transpuesta
-    const key = this.transposeMatrix(this.toMatrix(Flatkey));
-    
-    // Cálculo de subclaves
-    const subkeys = this.getSubkeys(key);
+    const key = this.transposeMatrix(this.toMatrix(Flatkey)); // Pasamos la entrada a matriz y luego obtenemos la transpuesta
+    const subkeys = this.getSubkeys(key); // Cálculo de subclaves
 
     // Ronda inicial
     this.state = this.AddRoundKey(key, this.transposeMatrix(this.toMatrix(clearText)));

@@ -1,0 +1,7 @@
+En la raiz de la carpeta SSI abrir una terminal y (teniendo npm y node instalado):
+
+$ npm start
+
+luego de que la terminal notifique Server running at...
+
+abrir en el nvegador localhost:8080
