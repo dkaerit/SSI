@@ -1,4 +1,4 @@
-export default class hello {
+export default class AES {
     constructor(cipher_key, Plaintext, mode) {
     }
 }

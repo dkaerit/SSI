@@ -1,31 +1,34 @@
 import { ints, hexs, bins, str } from './utils/transforms';
 
-import Vernam    from './alg/0-0-vernam';
-import Vigenere  from './alg/1-0-vigenere';
-import p3        from './alg/2-0-rc4';
-import p4        from './alg/2-1-a5-1';
-import p5        from './alg/3-0-chacha20';
-import p6        from './alg/4-0-gen-e0';
-import p7        from './alg/4-1-gen-ca-gps';
-import p8        from './alg/5-0-multi-snow3g-y-aes';
-import p9        from './alg/6-0-rijndael';
-import CBC       from './alg/7-0-cbc';
-import p10        from './alg/7-1-diffle-hellman';
-import p11       from './alg/7-2-fiat-shamir';
-import p12       from './alg/8-0-diffle&hellman(elgamal)';
-import p13       from './alg/9-0-rsa';
-import p14       from './alg/10-0-diffle&hellman(elgamal elíptico)';
-import p15       from './alg/10-1-gamal-eliptico';
+import Vernam     from './alg/0-0-vernam';
+import Vigenere   from './alg/1-0-vigenere';
+import RC4        from './alg/2-0-rc4';
+import A5         from './alg/2-1-a5-1';
+import ChaCha20   from './alg/3-0-chacha20';
+import GenE0      from './alg/4-0-gen-e0';
+import GenCA      from './alg/4-1-gen-ca-gps';
+import Snow3G     from './alg/5-0-multi-snow3g-y-aes';
+import AES        from './alg/6-0-rijndael';
+import CBC        from './alg/7-0-cbc';
+import DyH        from './alg/7-1-diffle-hellman';
+import FiatShamir from './alg/7-2-fiat-shamir';
+import DyH_G      from './alg/8-0-diffle&hellman(elgamal)';
+import RSA        from './alg/9-0-rsa';
+import DyH_GE     from './alg/10-0-diffle&hellman(elgamal elíptico)';
+import GE         from './alg/10-1-gamal-eliptico';
 
 disable(1,1,1,1,1,1);
-var objs = [ 0, Vernam, Vigenere, p3, p4, p5, p6, p7,p8, CBC, p9, p10, p11, p12,p13,p14,p15 ]
+var objs = [ 0, 
+    Vernam, Vigenere, RC4, A5, ChaCha20,
+    GenE0, GenCA, Snow3G, AES, CBC, DyH, 
+    FiatShamir, DyH_G, RSA, DyH_GE, GE ];
 
 // selectores
 
 
 // listeners
-$('#algoritmo').children().map(it => createEncrypt(objs[it],  $('#algoritmo').children()[it].innerHTML));
-$('#algoritmo').children().map(it => createDecrypt(objs[it],  $('#algoritmo').children()[it].innerHTML));
+$('#algoritmo').children().map(i => createEncrypt(objs[i],  $('#algoritmo').children()[i].innerHTML));
+$('#algoritmo').children().map(i => createDecrypt(objs[i],  $('#algoritmo').children()[i].innerHTML));
 
 // desactivar botones de ejemplos al inicio
 if ($('#ej1').is(':checked')) $('#ej2').attr('disabled','disabled'); 
@@ -131,13 +134,38 @@ $('#algoritmo').change(() => {
             }); 
             ; break;
 
-        case "10":
+        case "10": // DyH
+
             ; break;
 
-        case "11":
+        case "11": // Fiat-Shamir
             ; break;
 
-        case "12":
+        case "12": // DyH_G
+            active(1,1,1,1,1,1);
+            disable(1,0,0,0,0,0);  
+            $(`#plaintext`).html(JSON.stringify({p: 13, a: 4, m: 8}).replace(/[\r,]/g, ",  "));
+            $(`#cipherkey`).html(JSON.stringify({k: 5, x: 2}).replace(/[\r,]/g, ",  "));
+            $('#ejemplos').change(() => {
+                if($('#algoritmo option:selected').val() == "12") {
+                    if($('#ej1').is(':checked')) {
+                        disable(1,1,1,0,0,0); 
+                        $(`#plaintext`).html(JSON.stringify({p: 43, a: 23, m: 18}).replace(/[\r,]/g, ",  "));
+                        $(`#cipherkey`).html(JSON.stringify({k: 25, x: 33}).replace(/[\r,]/g, ",  "));
+                    } 
+                    if($('#ej2').is(':checked')) {
+                        disable(1,1,1,0,0,0); 
+                        $(`#plaintext`).html(JSON.stringify({p: 113, a: 43, m: 28}).replace(/[\r,]/g, ",  "));
+                        $(`#cipherkey`).html(JSON.stringify({k: 54, x: 71}).replace(/[\r,]/g, ",  "));
+                    }
+                    if($('#manual').is(':checked')) {
+                        active(1,1,1,1,1,1);
+                        disable(1,0,0,0,0,0); 
+                        $(`#plaintext`).html(JSON.stringify({p: 13, a: 4, m: 8}).replace(/[\r,]/g, ",  "));
+                        $(`#cipherkey`).html(JSON.stringify({k: 5, x: 2}).replace(/[\r,]/g, ",  "));
+                    }
+                }
+            });
             ; break;
 
         case "13":

@@ -1,4 +1,4 @@
-export default class p14 {
+export default class GenCA {
     constructor(cipher_key, Plaintext, mode) {
     }
 }

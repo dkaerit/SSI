@@ -1,4 +1,4 @@
-export default class p13 {
+export default class ChaCha20 {
     constructor(cipher_key, Plaintext, mode) {
     }
 }
