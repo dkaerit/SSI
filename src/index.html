@@ -24,20 +24,29 @@
                 <label for="algoritmo">Selecciona el algoritmo y el formato de entrada</label>
                 <select class="form-control" id="algoritmo">
                     <option selected disabled hidden>Algoritmo</option>
-                    <option value="1" >P1  - Vernam</option>
-                    <option value="2" >P2  - Vigenere</option>
-                    <option value="3" >P3  - RC4</option>
-                    <option value="4" >P4  - A5-1</option>
-                    <option value="5" >P5  - Generador E0 de Bluetooth</option>
-                    <option value="6" >P6  - Multiplicación Snow3G y AES</option>
-                    <option value="7" >P7  - Rijndael</option>
-                    <option value="8" >P8  - CBC</option>
-                    <option value="9" >P9  - Diffle-Hellman</option>
-                    <option value="10">P10 - Fiat-Shamir</option>
-                    <option value="11">P11 - RSA</option>
-                    <option value="12">P12 - Gamal Elíptico</option>
-                    <option value="13">P13 - ChaCha20</option>
-                    <option value="14">P14 - Generador C/A de GPS</option>
+                    <!-- Bloque 1 - C. Básicos -->
+                    <option value="0" >P0/0&nbsp;&nbsp;&nbsp;- Vernam</option>
+                    <option value="1" >P1/0&nbsp;&nbsp;&nbsp;- Vigenere</option>
+                    <!-- Bloque 2 - Comunicaciones seguras -->
+                    <option value="2" >P2/0&nbsp;&nbsp;&nbsp;- RC4</option>
+                    <option value="3" >P2/1&nbsp;&nbsp;&nbsp;- A5-1</option>
+                    <option value="4" >P3/0&nbsp;&nbsp;&nbsp;- ChaCha20</option>
+                    <option value="5" >P4/0&nbsp;&nbsp;&nbsp;- Generador E0 de Bluetooth</option>
+                    <option value="6" >P4/1&nbsp;&nbsp;&nbsp;- Generador C/A de GPS</option>
+                    <option value="7" >P5/0&nbsp;&nbsp;&nbsp;- Multiplicación Snow3G y AES</option>
+                    <option value="8" >P6/0&nbsp;&nbsp;&nbsp;- Algoritmo Rijndael (AES)</option>
+                    <option value="9" >P7/0&nbsp;&nbsp;&nbsp;- CBC</option>
+                    <option value="10">P7/1&nbsp;&nbsp;&nbsp;- Diffle-Hellman</option>
+                    <!-- Bloque 3 - Esquemas de control de accesos y autenticacion -->
+                    <option value="11">P7/2&nbsp;&nbsp;&nbsp;- Fiat-Shamir</option>
+                    <!-- Bloque 4 - Infraestructura de clave pública -->  
+                    <option value="12">P8/0&nbsp;&nbsp;&nbsp;- Intercambio Diffle-Hellmann (ElGamal)</option>
+                    <option value="13">P9/0&nbsp;&nbsp;&nbsp;- RSA</option>
+                    <option value="14">P10/0&nbsp;- Algortimo DIffle-Hellman (ElGamal Elíptico)</option>
+                    <option value="15">P10/1&nbsp;- Criptografía elíptica (ElGamal Elíptico)</option>
+                    
+                    
+                    
                 </select>
                 <select class="form-control" id="formato">
                     <option value="srt" selected >Texto plano</option>

@@ -1,7 +1,8 @@
 import { ints, hexs, bins, str } from '../utils/transforms';
 
-export default class p1 { // vernam
+export default class Vernam { // vernam
     constructor(format, plaintext, key) {
+        alert("Este algoritmo no se asegura de repetir la clave para cubrir todo el mensaje, asegúrate de darle la misma dimensión.");
         if(format == "srt") {this.intsMsg = ints.fromString(plaintext)}
         if(format == "hex") {this.intsMsg = ints.fromHexs(plaintext)}
         if(format == "int") {}

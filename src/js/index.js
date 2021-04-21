@@ -1,22 +1,24 @@
 import { ints, hexs, bins, str } from './utils/transforms';
 
-import p1  from './alg/p1-vernam';
-import p2  from './alg/p2-vigenere';
-import p3  from './alg/p3-rc4';
-import p4  from './alg/p4-a5-1';
-import p5  from './alg/p5-gen-e0';
-import p6  from './alg/p6-multi-snow3g-y-aes';
-import p7  from './alg/p7-rijndael';
-import p8  from './alg/p8-cbc';
-import p9  from './alg/p9-diffle-hellman';
-import p10 from './alg/p10-fiat-shamir';
-import p11 from './alg/p11-rsa';
-import p12 from './alg/p12-gamal-eliptico';
-import p13 from './alg/p13-chacha20';
-import p14 from './alg/p14-gen-ca-gps';
+import Vernam    from './alg/0-0-vernam';
+import Vigenere  from './alg/1-0-vigenere';
+import p3        from './alg/2-0-rc4';
+import p4        from './alg/2-1-a5-1';
+import p5        from './alg/3-0-chacha20';
+import p6        from './alg/4-0-gen-e0';
+import p7        from './alg/4-1-gen-ca-gps';
+import p8        from './alg/5-0-multi-snow3g-y-aes';
+import p9        from './alg/6-0-rijndael';
+import CBC       from './alg/7-0-cbc';
+import p10        from './alg/7-1-diffle-hellman';
+import p11       from './alg/7-2-fiat-shamir';
+import p12       from './alg/8-0-diffle&hellman(elgamal)';
+import p13       from './alg/9-0-rsa';
+import p14       from './alg/10-0-diffle&hellman(elgamal elíptico)';
+import p15       from './alg/10-1-gamal-eliptico';
 
 disable(1,1,1,1,1,1);
-var objs = [ 0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14 ]
+var objs = [ 0, Vernam, Vigenere, p3, p4, p5, p6, p7,p8, CBC, p9, p10, p11, p12,p13,p14,p15 ]
 
 // selectores
 
@@ -25,21 +27,20 @@ var objs = [ 0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14 ]
 $('#algoritmo').children().map(it => createEncrypt(objs[it],  $('#algoritmo').children()[it].innerHTML));
 $('#algoritmo').children().map(it => createDecrypt(objs[it],  $('#algoritmo').children()[it].innerHTML));
 
-if ($('#ej1').is(':checked')) {
-    $('#ej2').attr('disabled','disabled');
-} else {
-}
+// desactivar botones de ejemplos al inicio
+if ($('#ej1').is(':checked')) $('#ej2').attr('disabled','disabled'); 
+
 
 // inicialización
 $('#algoritmo').change(() => {
-    switch($('#algoritmo option:selected').val()) {
-        case "1": 
-            active(1,1,1,1,1,1);
-            disable(0,0,1,0,0,0);  
+    switch($('#algoritmo option:selected').val()) { // trataminto de campos y ejemplos
+        case "0": // Vernam
+            active(1,1,1,1,1,1); // activar todo
+            disable(1,0,1,0,0,0); // restringir elegir clave (es aleatoria) y forzamos que el formato sea srt
             $("#formato").val('srt');
 
             $('#ejemplos').change(() => {
-                if($('#algoritmo option:selected').val() == "1") {
+                if($('#algoritmo option:selected').val() == "0") {
                     if($('#ej1').is(':checked')) {
                         $(`#plaintext`).html("SOL");
                         $(`#cipherkey`).html(str.fromBins(["00111100", "00011000", "01110011"]).join(''));
@@ -53,14 +54,14 @@ $('#algoritmo').change(() => {
 
             ; break;
             
-        case "2": 
+        case "1": // Vigeneres
             active(1,1,1,1,1,1);
             disable(0,0,0,0,0,0);  
             $("#formato").val('srt');
             $('#ej2').attr('disabled','disabled');
 
             $('#ejemplos').change(() => {
-                if($('#algoritmo option:selected').val() == "2") {
+                if($('#algoritmo option:selected').val() == "1") {
                     if($('#ej1').is(':checked')) {
                         $(`#plaintext`).html("ESTE MENSAJE SE AUTODESTRUIRA");
                         $(`#cipherkey`).html("MISION");
@@ -69,7 +70,10 @@ $('#algoritmo').change(() => {
             }); 
             ; break;
 
-        case "3": 
+        case "2": 
+            ; break;
+
+        case "3":
             ; break;
 
         case "4":
@@ -81,16 +85,19 @@ $('#algoritmo').change(() => {
         case "6":
             ; break;
 
-        case "7":
+        case "7": 
             ; break;
 
         case "8":
+            ; break;
+
+        case "9": // CBC
             active(1,1,1,1,1,1);
             disable(1,0,0,0,0,0); 
             $("#formato").val('hex');
 
             $('#ejemplos').change(() => {
-                if($('#algoritmo option:selected').val() == "8") {
+                if($('#algoritmo option:selected').val() == "9") {
                     if($('#ej1').is(':checked')) {
                         disable(0,0,1,0,0,0); 
                         $(`#plaintext`).html(([
@@ -122,10 +129,6 @@ $('#algoritmo').change(() => {
                     }
                 }
             }); 
-
-            ; break;
-
-        case "9":
             ; break;
 
         case "10":
@@ -137,6 +140,14 @@ $('#algoritmo').change(() => {
         case "12":
             ; break;
 
+        case "13":
+            ; break;
+
+        case "14":
+            ; break;
+
+        case "15":
+            ; break;
         default:
             $('#cipherkey').attr('disabled','disabled');
             $('#plaintext').attr('disabled','disabled');

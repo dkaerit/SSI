@@ -1,8 +1,9 @@
 import { ints, hexs, bins, str } from '../utils/transforms';
 import { alph } from '../utils/alph-p2.json';
 
-export default class p2 {
+export default class Vigenere {
     constructor(format, plaintext, key) {
+        alert("Importante: Este algoritmo ignora los espacios");
         this.msg = plaintext.toUpperCase();
         this.cond = this.msg.replace(/\s/g, '');
         this.intsCond = this.intsInAlph(this.cond);

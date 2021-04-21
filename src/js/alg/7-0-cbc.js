@@ -6,7 +6,7 @@ Array.prototype.swap = function(a, b){
     return this;
 }
 
-export default class p8 {
+export default class CBC {
     constructor(format, plaintext, key) { // str,str,str
         // array de bloques(arrays) - HEXS
         if(format == "srt") {
