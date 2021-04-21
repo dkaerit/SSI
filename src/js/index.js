@@ -10,9 +10,8 @@ import GenCA      from './alg/4-1-gen-ca-gps';
 import Snow3G     from './alg/5-0-multi-snow3g-y-aes';
 import AES        from './alg/6-0-rijndael';
 import CBC        from './alg/7-0-cbc';
-import DyH        from './alg/7-1-diffle-hellman';
-import FiatShamir from './alg/7-2-fiat-shamir';
-import DyH_G      from './alg/8-0-diffle&hellman(elgamal)';
+import FiatShamir from './alg/7-1-fiat-shamir';
+import DyH_G      from './alg/8-0-elgamal';
 import RSA        from './alg/9-0-rsa';
 import DyH_GE     from './alg/10-0-diffle&hellman(elgamal elíptico)';
 import GE         from './alg/10-1-gamal-eliptico';
@@ -20,8 +19,7 @@ import GE         from './alg/10-1-gamal-eliptico';
 disable(1,1,1,1,1,1);
 var objs = [ 0, 
     Vernam, Vigenere, RC4, A5, ChaCha20,
-    GenE0, GenCA, Snow3G, AES, CBC, DyH, 
-    FiatShamir, DyH_G, RSA, DyH_GE, GE ];
+    GenE0, GenCA, Snow3G, AES, CBC, FiatShamir, DyH_G, RSA, DyH_GE, GE ];
 
 // selectores
 
@@ -134,38 +132,39 @@ $('#algoritmo').change(() => {
             }); 
             ; break;
 
-        case "10": // DyH
+        case "10": // Fiat-Shamir
 
             ; break;
 
-        case "11": // Fiat-Shamir
-            ; break;
-
-        case "12": // DyH_G
+        case "11": // ElGamal
             active(1,1,1,1,1,1);
-            disable(1,0,0,0,0,0);  
-            $(`#plaintext`).html(JSON.stringify({p: 13, a: 4, m: 8}).replace(/[\r,]/g, ",  "));
-            $(`#cipherkey`).html(JSON.stringify({k: 5, x: 2}).replace(/[\r,]/g, ",  "));
-            $('#ejemplos').change(() => {
-                if($('#algoritmo option:selected').val() == "12") {
-                    if($('#ej1').is(':checked')) {
-                        disable(1,1,1,0,0,0); 
-                        $(`#plaintext`).html(JSON.stringify({p: 43, a: 23, m: 18}).replace(/[\r,]/g, ",  "));
-                        $(`#cipherkey`).html(JSON.stringify({k: 25, x: 33}).replace(/[\r,]/g, ",  "));
-                    } 
-                    if($('#ej2').is(':checked')) {
-                        disable(1,1,1,0,0,0); 
-                        $(`#plaintext`).html(JSON.stringify({p: 113, a: 43, m: 28}).replace(/[\r,]/g, ",  "));
-                        $(`#cipherkey`).html(JSON.stringify({k: 54, x: 71}).replace(/[\r,]/g, ",  "));
+                disable(1,0,0,0,0,0);  
+                $(`#plaintext`).html(JSON.stringify({p: 13, a: 4, m: 8}).replace(/[\r,]/g, ",  "));
+                $(`#cipherkey`).html(JSON.stringify({k: 5, x: 2}).replace(/[\r,]/g, ",  "));
+                $('#ejemplos').change(() => {
+                    if($('#algoritmo option:selected').val() == "11") {
+                        if($('#ej1').is(':checked')) {
+                            disable(1,1,1,0,0,0); 
+                            $(`#plaintext`).html(JSON.stringify({p: 43, a: 23, m: 18}).replace(/[\r,]/g, ",  "));
+                            $(`#cipherkey`).html(JSON.stringify({k: 25, x: 33}).replace(/[\r,]/g, ",  "));
+                        } 
+                        if($('#ej2').is(':checked')) {
+                            disable(1,1,1,0,0,0); 
+                            $(`#plaintext`).html(JSON.stringify({p: 113, a: 43, m: 28}).replace(/[\r,]/g, ",  "));
+                            $(`#cipherkey`).html(JSON.stringify({k: 54, x: 71}).replace(/[\r,]/g, ",  "));
+                        }
+                        if($('#manual').is(':checked')) {
+                            active(1,1,1,1,1,1);
+                            disable(1,0,0,0,0,0); 
+                            $(`#plaintext`).html(JSON.stringify({p: 13, a: 4, m: 8}).replace(/[\r,]/g, ",  "));
+                            $(`#cipherkey`).html(JSON.stringify({k: 5, x: 2}).replace(/[\r,]/g, ",  "));
+                        }
                     }
-                    if($('#manual').is(':checked')) {
-                        active(1,1,1,1,1,1);
-                        disable(1,0,0,0,0,0); 
-                        $(`#plaintext`).html(JSON.stringify({p: 13, a: 4, m: 8}).replace(/[\r,]/g, ",  "));
-                        $(`#cipherkey`).html(JSON.stringify({k: 5, x: 2}).replace(/[\r,]/g, ",  "));
-                    }
-                }
-            });
+                });
+            ; break;
+
+        case "12": // 
+            
             ; break;
 
         case "13":
@@ -174,8 +173,6 @@ $('#algoritmo').change(() => {
         case "14":
             ; break;
 
-        case "15":
-            ; break;
         default:
             $('#cipherkey').attr('disabled','disabled');
             $('#plaintext').attr('disabled','disabled');
