@@ -77,7 +77,22 @@ $('#algoritmo').change(() => {
         case "3":
             ; break;
 
-        case "4":
+        case "4": // ChaCha20
+            active(1,1,1,1,1,1);
+            disable(1,1,0,0,0,0); 
+            $('#ej2').attr('disabled','disabled');
+            $(`#plaintext`).html("");
+            $(`#cipherkey`).html("00:01:02:03: 04:05:06:07: 08:09:0a:0b: 0c:0d:0e:0f: 10:11:12:13: 14:15:16:17: 18:19:1a:1b: 1c:1d:1e:1f");
+
+            $('#ejemplos').change(() => {
+                if($('#algoritmo option:selected').val() == "4") {
+                    if($('#ej1').is(':checked')) {
+                        $(`#plaintext`).html("");
+                        $(`#cipherkey`).html("00:01:02:03: 04:05:06:07: 08:09:0a:0b: 0c:0d:0e:0f: 10:11:12:13: 14:15:16:17: 18:19:1a:1b: 1c:1d:1e:1f");
+                    }
+                }
+                
+            });
             ; break;
 
         case "5":

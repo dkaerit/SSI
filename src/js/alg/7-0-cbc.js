@@ -91,7 +91,7 @@ export default class CBC {
             descifrados.push(xor);
         });
 
-        return [].concat.apply([], descifrados);;
+        return [].concat.apply([], descifrados);
     }
 
     cypherStealing(nivel,prevc) {
