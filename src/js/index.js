@@ -95,10 +95,16 @@ $('#algoritmo').change(() => {
             });
             ; break;
 
-        case "5":
+        case "5": 
+
             ; break;
 
-        case "6":
+        case "6": // GenCA
+            active(1,1,1,1,1,1);
+            disable(1,1,0,0,0,0);
+            $(`#cipherkey`).html(JSON.stringify({satelite: 1, longitud: 14}).replace(/[\r,]/g, ",  ")); 
+            $('#ej1').attr('disabled','disabled');
+            $('#ej2').attr('disabled','disabled');
             ; break;
 
         case "7": 

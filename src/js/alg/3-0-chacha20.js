@@ -1,16 +1,6 @@
 import { ints, hexs } from '../utils/transforms';
 const ROUNDS = 20;
 
-
-
-function sum1Dand2D(oneD,twoD) {
-    return oneD.map((el,i) => {
-        let j = Math.trunc(i/(twoD.length-1)); 
-        let k = i%(twoD[j].length);
-        return el + twoD[j][k];
-    });
-}
-
 export default class ChaCha20 {
     constructor(format, Plaintext, key) {
         
