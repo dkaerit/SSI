@@ -205,11 +205,13 @@ export const Aes = function () {
    * @param {number[]} clearText 
    */
   this.cipher = function (Flatkey, clearText) {
+    console.log("ClearText", clearText);
     const key = this.transposeMatrix(this.toMatrix(Flatkey)); // Pasamos la entrada a matriz y luego obtenemos la transpuesta
     const subkeys = this.getSubkeys(key); // Cálculo de subclaves
 
     // Ronda inicial
     this.state = this.AddRoundKey(key, this.transposeMatrix(this.toMatrix(clearText)));
+    console.log("AddRoundKey1:", this.state);
     
     // Logging
     this.log = [];
@@ -217,10 +219,15 @@ export const Aes = function () {
 
     //Ronda estándar
     for (let i = 1; i < this.numOfRounds; i++) {
+      console.log("aftersub", this.state);
       this.state = this.state.map(row => row.map(byte => this.ByteSub(byte))); // ByteSub
+      console.log("subBytes", this.state);
       this.state = this.ShiftRow(this.state); // ShiftRow
+      console.log("shiftRows", this.state);
       this.state = this.MixColumn(this.state); // MixColumn
+      console.log("MixColumn", this.state);
       this.state = this.AddRoundKey(this.state, subkeys[i]); // AddRound key
+      console.log("AddRoundKey2:", this.state);
       this.log.push({subkey: subkeys[i], state: this.state}); // Logging
     }
 

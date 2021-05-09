@@ -5,10 +5,10 @@ export default class ChaCha20 {
     constructor(format, Plaintext, key) {
         
         this.clave = ints.fromHexs(key.split(": ").map(word => word.split(":").reverse().join(""))); 
-        //this.contador = ints.fromHexs(prompt("Contador", "01:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
-        //this.nonce = ints.fromHexs(prompt("Nonce", "00:00:00:09: 00:00:00:4a: 00:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
-        this.contador = ints.fromHexs(("01:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
-        this.nonce = ints.fromHexs(("00:00:00:09: 00:00:00:4a: 00:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
+        this.contador = ints.fromHexs(prompt("Contador", "01:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
+        this.nonce = ints.fromHexs(prompt("Nonce", "00:00:00:09: 00:00:00:4a: 00:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
+        //this.contador = ints.fromHexs(("01:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
+        //this.nonce = ints.fromHexs(("00:00:00:09: 00:00:00:4a: 00:00:00:00").split(": ").map(word => word.split(":").reverse().join("")));
 
         console.log("clave:", this.clave);       // [[4],[4],[4],[4],[4],[4],[4],[4]]
         console.log("contador:", this.contador); // [[4]]

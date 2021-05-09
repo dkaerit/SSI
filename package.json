@@ -32,6 +32,7 @@
     "postcss-nesting": "^7.0.1"
   },
   "dependencies": {
+    "@f/srand": "^1.0.1",
     "caniuse-lite": "^1.0.30001211",
     "crypto-js": "^4.0.0"
   }

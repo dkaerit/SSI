@@ -1,5 +1,4 @@
 import { ints, hexs, bins, str } from './utils/transforms';
-
 import Vernam     from './alg/0-0-vernam';
 import Vigenere   from './alg/1-0-vigenere';
 import RC4        from './alg/2-0-rc4';
@@ -183,12 +182,49 @@ $('#algoritmo').change(() => {
                     }
                 });
             ; break;
+        
+        
+        case "12": // RSA
+            active(1,1,1,1,1,1);
+            disable(1,0,0,0,0,0); 
 
-        case "12": // 
-            
+            $('#ej2').attr('disabled','disabled');
+            $(`#plaintext`).html(JSON.stringify({msg: "MANDA DINEROS", p: 421, q: 7, d: 1619}).replace(/[\r,]/g, ",  "));
+            $('#ejemplos').change(() => {
+                if($('#algoritmo option:selected').val() == "12") {
+                    if($('#ej1').is(':checked')) {
+                        disable(1,1,1,0,0,0); 
+                        $(`#plaintext`).html(JSON.stringify({msg: "AMIGO MIO", p: 2347, q: 347, d: 5}).replace(/[\r,]/g, ",  "));
+                    } 
+                    if($('#manual').is(':checked')) {
+                        active(1,1,1,1,1,1);
+                        disable(1,0,0,0,0,0); 
+                        $(`#plaintext`).html(JSON.stringify({msg: "MANDA DINEROS", p: 421, q: 7, d: 1619}).replace(/[\r,]/g, ",  "));
+                    }
+                }
+            });
             ; break;
 
-        case "13":
+        case "13": // DyH_GE
+            active(1,1,1,1,1,1);
+            disable(1,0,0,0,0,0);
+            //alert("Este algoritmo utiliza la curva elíptica E: y²= x³ + ax + b");
+
+            $('#ej2').attr('disabled','disabled');
+            $('#ejemplos').change(() => {
+                if($('#algoritmo option:selected').val() == "13") {
+                    if($('#ej1').is(':checked')) {
+                        disable(1,1,1,0,0,0); 
+                        $(`#plaintext`).html(JSON.stringify({p: 13, a: 5, b: 3, m: 2}).replace(/[\r,]/g, ",  "));
+                        $(`#cipherkey`).html(JSON.stringify({dA: 4, dB: 2, G: [9,6]}).replace(/[\r,]/g, ",  "));
+                    } 
+
+                    if($('#manual').is(':checked')) {
+                        active(1,1,1,1,1,1);
+                        disable(1,0,0,0,0,0); 
+                    }
+                }
+            });
             ; break;
 
         case "14":

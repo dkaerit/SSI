@@ -1,8 +1,20 @@
-Number.prototype.mod = function(b) {
-    // Calculate
-    return ((this % b) + b) % b;
-}
+import srand from '@f/srand';
 
+var mod = function (n, m) {
+    var remain = n % m;
+    return Math.floor(remain >= 0 ? remain : remain + m);
+};
+
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 var alg = {
     expRapida(base,exp,m) {
@@ -20,16 +32,37 @@ var alg = {
         return x;
     },
     
-    euclidExt(num1,num2) { 
-        let x = [null, Math.max(num1,num2), Math.min(num1,num2)]; 
+    euclidExt(a,b) { 
+        if(Math.min(a,b) == 0) return {"inverso":1, "mcd":0};
+        let x = [null, Math.max(a,b), Math.min(a,b)]; 
         let z = [0, 1]; 
 
-        for(var i = 2; x[i] != 0; i++) {
-            x.push(x[i-1] % x[i]); 
-            z.push((-Math.trunc(x[i-1]/x[i]) * z[i-1] + z[i-2]).mod(x[1])); 
+        for(var i = 2; (x[i-1]%x[i]) != 0; i++) {
+            x.push(x[i-1]%x[i]); 
+            mod(z.push((-Math.trunc(x[i-1]/x[i]) * z[i-1] + z[i-2]),x[1])); 
+            if(i > 1000) break;
         }    
 
-        return z[i-2];
+        return {"inverso":z[z.length-2], "mcd":x[x.length-1]};
+    },
+
+    choose(choices) {
+        var index = Math.floor(Math.random() * choices.length);
+        return choices[index];
+    },
+
+    lehmanPeralta(p) {
+        var a, result, primo = true;
+        var enteros = [...Array(p).keys()];
+
+        while(primo && (enteros.length > 0)) {
+            a = this.choose(enteros);
+            enteros.remove(a);
+            result = this.expRapida(a, (p-1)/2, p)
+            if((result != 1) && (result != p-1)) primo = false;
+        }
+            
+        return primo;
     }
 }
 

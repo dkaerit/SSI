@@ -21,7 +21,6 @@ export default class GenCA {
         for(let i=0; i<data.longitud; ++i) {
             if(i == 0) console.log(R1.join(""),R2.join(""));
             
-            
             // realimentación
             c1 = this.LFSR(R1, [2,9],         9);
             c2 = this.LFSR(R2, [1,2,5,7,8,9], sat);
@@ -35,11 +34,11 @@ export default class GenCA {
         console.log("C/A code:", cs.reverse().join(""));
     }
 
-    LFSR(R,fb,cif) {
+    LFSR(R,fb,cif) { // [1^1^1..]
         let feed = fb.map(pos => R[pos]).reduce((a,b) => (a^b), 0);
         let c;
 
-        // bits pre xor
+        // bits pre xor [R[1]^R[5]]
         if(Array.isArray(cif)) c = cif.map(pos => R[pos]).reduce((a,b) => (a^b), 0);
         else                   c = R[R.length-1];
         

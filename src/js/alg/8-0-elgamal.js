@@ -22,7 +22,7 @@ export default class DyH_G {
     }
 
     decrypt() {
-        this.invK = alg.euclidExt(this.K,this.elcomuns.p);
+        this.invK = alg.euclidExt(this.K,this.elcomuns.p).inverso;
         return ((this.invK * this.K *  this.elcomuns.m) % this.elcomuns.p);
     }
 

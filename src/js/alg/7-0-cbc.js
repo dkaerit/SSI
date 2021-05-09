@@ -28,6 +28,7 @@ export default class CBC {
             this.iv      = ints.fromBins(this.iv.split(','));
         }
         this.bloques = this.separarEnBloques(plaintext); 
+        console.log(`bloques separados: `,this.bloques);
         
         // mostrar los valores iniciales
         console.log("Clave", this.key);
@@ -48,6 +49,7 @@ export default class CBC {
             xor = [];
             if(i == 0) {
                 xor = ints.fromHexs(bloque).map((byte,j) => { return (byte ^ this.iv[j]); }); 
+                console.log("xor:", xor);
                 cifrados.push(aes.cipher(key,xor));  // agregar bloque cifrado AES
             } else {
                 if (bloque.length == 16) {
