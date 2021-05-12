@@ -1,8 +1,9 @@
 import srand from '@f/srand';
 
 var mod = function (n, m) {
-    var remain = n % m;
-    return Math.floor(remain >= 0 ? remain : remain + m);
+    var remain = n%m;
+    while(remain < 0) remain = remain+m;
+    return Math.floor(remain%m);
 };
 
 Array.prototype.remove = function() {
@@ -39,11 +40,35 @@ var alg = {
 
         for(var i = 2; (x[i-1]%x[i]) != 0; i++) {
             x.push(x[i-1]%x[i]); 
-            mod(z.push((-Math.trunc(x[i-1]/x[i]) * z[i-1] + z[i-2]),x[1])); 
+            z.push(mod((-Math.trunc(x[i-1]/x[i]) * z[i-1] + z[i-2]), x[1])); 
             if(i > 1000) break;
         }    
 
+        console.log(z,x);
         return {"inverso":z[z.length-2], "mcd":x[x.length-1]};
+    },
+
+    modInverse(a, m) {
+        // validate inputs
+        [a, m] = [Number(a), Number(m)]
+        if (Number.isNaN(a) || Number.isNaN(m)) return NaN // invalid input
+        a = (a%m + m)%m
+        if (!a || m < 2) return NaN // invalid input
+        // find the gcd
+        const s = []
+        let b = m
+        while(b) {
+            [a, b] = [b, a%b]
+            s.push({a, b})
+        }
+        if (a !== 1) return NaN // inverse does not exists
+        
+        // find the inverse
+        let x = 1, y = 0
+        for(let i = s.length-2; i >= 0; --i) {
+            [x, y] = [y,  x - y * Math.floor(s[i].a/s[i].b)]
+        }
+        return (y%m + m)%m
     },
 
     choose(choices) {

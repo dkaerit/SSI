@@ -4,8 +4,9 @@ Array.range = (n) => Array.apply(null,Array(n)).map((_,i) => i);
 Array.prototype.chunk = function(n) {return Array.range(Math.ceil(this.length/n)).map((_,i) => this.slice(i*n,i*n+n));}
 
 var mod = function (n, m) {
-    var remain = n % m;
-    return Math.floor(remain >= 0 ? remain : remain + m);
+    var remain = n%m;
+    while(remain < 0) remain = remain+m;
+    return Math.floor(remain%m);
 };
 
 export default class Point {
@@ -18,20 +19,22 @@ export default class Point {
     sumar(other,a,p) {
         console.log(`%c ---- Sumar P+Q: (${this.x},${this.y})+(${other.x},${other.y})`, 'color: #bada55');
         var x3,y3;
-        if((this.x == other.x) && (this.y == other.y)) {             // IGUALES
-            console.log("%c       P == Q", 'color: #bada55');
-            var num = 3*Math.pow(this.x,2)+a;                // 3*(x1²) + a
-            var den = alg.euclidExt(2*other.y, p).inverso;    // ((2*y2)^-1) mod p
-            
-        } 
-        else {   
-            console.log("%c       P != Q", 'color: #bada55');                                          // DISTINTOS
-            var num = mod(other.y-this.y,p) // (y2-y1)  
-            var den = alg.euclidExt(other.x-this.x, p).inverso; // ((x2-x1)^-1) mod p
+        if((this.x == other.x) && (this.y == other.y)) {             
+            console.log("%c       P == Q", 'color: #bada55');        // IGUALES
+            var num = (3*Math.pow(this.x,2)+a)%p;                    // 3*(x1²) + a
+            var den = alg.modInverse(2*other.y, p);                  // ((2*y2)^-1) mod p
+            console.log(`%c       num =3*${this.x}^${2}+${a} mod ${p} = ${num}`, 'color: #bada55');
+            console.log(`%c       den = (2*${other.y})^-1 mod ${p} = ${den}`, 'color: #bada55');
+        } else {   
+            console.log("%c       P != Q", 'color: #bada55');        // DISTINTOS
+            var num = mod(other.y-this.y,p)                          // (y2-y1)  
+            var den = alg.modInverse(other.x-this.x, p);             // ((x2-x1)^-1) mod p
+            console.log(`%c       num =${other.y}-${this.y} mod ${p} = ${num}`, 'color: #bada55');
+            console.log(`%c       den =(${other.x}-${this.x})^-1 mod ${p} = ${den}`, 'color: #bada55');
         } 
 
         var lambda = ((num*den)%p); 
-        console.log(`%c       λ = ${lambda}`, 'color: #bada55');
+        console.log(`%c       λ = ${num}*${den} mod ${p} = ${lambda}`, 'color: #bada55');
 
         x3 = mod(Math.pow(lambda,2)-this.x-other.x,p)        // λ² - x1 - x2
         y3 = mod(lambda*(this.x-x3)-this.y,p)                // λ* (x1 - x3) -y1

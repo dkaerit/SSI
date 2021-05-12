@@ -34,6 +34,7 @@
   "dependencies": {
     "@f/srand": "^1.0.1",
     "caniuse-lite": "^1.0.30001211",
-    "crypto-js": "^4.0.0"
+    "crypto-js": "^4.0.0",
+    "plotly.js-dist": "^1.58.4"
   }
 }

@@ -33,6 +33,9 @@ if ($('#ej1').is(':checked')) $('#ej2').attr('disabled','disabled');
 
 // inicialización
 $('#algoritmo').change(() => {
+    $('#res-bin').show(); $("label[for='res-bin']").show();
+    $('#res-int').show(); $("label[for='res-int']").show();
+    $('#res-hex').show(); $("label[for='res-hex']").show();
     switch($('#algoritmo option:selected').val()) { // trataminto de campos y ejemplos
         case "0": // Vernam
             active(1,1,1,1,1,1); // activar todo
@@ -208,6 +211,9 @@ $('#algoritmo').change(() => {
         case "13": // DyH_GE
             active(1,1,1,1,1,1);
             disable(1,0,0,0,0,0);
+            $('#res-bin').hide(); $("label[for='res-bin']").hide();
+            $('#res-int').hide(); $("label[for='res-int']").hide();
+            $('#res-hex').hide(); $("label[for='res-hex']").hide();
             //alert("Este algoritmo utiliza la curva elíptica E: y²= x³ + ax + b");
 
             $('#ej2').attr('disabled','disabled');
